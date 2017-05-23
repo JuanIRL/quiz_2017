@@ -187,3 +187,41 @@ exports.check = function (req, res, next) {
         answer: answer
     });
 };
+exports.randomPlay = function(req, res, next){
+  console.log(req.session);
+  console.log("Valor de score ahora mismo: " + req.session.score);
+  if(!req.session.score){
+    req.session.score = 0;
+    req.session.respondidas = [];
+    console.log("No existe score, ahora es " + req.session.score);
+  } else {
+    console.log("Existe score, y vale" + req.session.score);
+  }
+  var includes;
+  do{
+    includes = 0;
+    var qId = Math.floor(Math.random()*4 + 1);
+    for(var i in req.session.respondidas){
+      if(qId == req.session.respondidas[i]){
+        includes++;
+        console.log("Ya existe " + qId + " en respondidas");
+      }
+    }
+  } while(includes);
+  req.session.respondidas.push(qId);
+  models.Quiz.findById(qId)
+  .then(function (quiz) {
+      if (quiz) {
+          var q = quiz;
+          res.render('quizzes/random_play',{
+            quiz: q,
+            score: req.session.score
+          });
+      } else {
+          throw new Error('No existe ningún quiz con id=' + quizId);
+      }
+  })
+  .catch(function (error) {
+      next(error);
+  });
+};
