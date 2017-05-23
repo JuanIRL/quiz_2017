@@ -225,3 +225,34 @@ exports.randomPlay = function(req, res, next){
       next(error);
   });
 };
+
+exports.randomCheck = function (req, res, next) {
+  console.log("Comprobando...");
+  var answer = req.query.answer || "";
+
+  var result = answer.toLowerCase().trim() === req.quiz.answer.toLowerCase().trim();
+
+  if(!result){
+    req.session.score = 0;
+    req.session.respondidas = [];
+    console.log("Reiniciando score...");
+  } else{
+    req.session.score++;
+    console.log("Aumentando score, ahora vale " + req.session.score);
+    if(req.session.respondidas.length >= 4){
+      scoreFinal = req.session.score;
+      console.log("Abriendo vista de completado...");
+      req.session.score = 0;
+      req.session.respondidas = [];
+      res.render("quizzes/random_nomore", {
+        score: scoreFinal
+      });
+      return;
+    }
+  }
+  res.render("quizzes/random_result", {
+      result: result,
+      answer: answer,
+      score: req.session.score
+  });
+};
