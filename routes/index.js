@@ -8,6 +8,10 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+//Pagina randomplay
+router.get('/quizzes/randomplay', function(req, res, next) {
+  res.render('random_play');
+});
 // Pagina de creditos
 router.get('/author', function(req, res, next) {
     res.render('author');
