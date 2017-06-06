@@ -44,6 +44,9 @@
 
             <li>
                 <%= tip.text %>
+                <span id="autor">
+                  <%= tip.Author.username %>
+                </span>
 
                 <% if (!accepted && (isAdmin || isQuizAuthor)) { %>
 
