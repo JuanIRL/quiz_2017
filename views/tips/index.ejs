@@ -1,40 +1,6 @@
-
-
-<!--<ul>
-    <% for (var i in tips) { %>
-        <% var tip = tips[i]; %>
-
-        <li>
-
-            <% if (tip.accepted ||
-                    (session.user && (session.user.isAdmin || (quizAuthorId && quizAuthorId === session.user.id)))) { %>
-
-                <%= tip.text %>
-                <span id="autor">
-                  (by <%= tip.Author.username %>)
-                </span>
-
-            <% } %>
-
-            <% if (!tip.accepted &&
-                    (session.user && (session.user.isAdmin || (quizAuthorId && quizAuthorId === session.user.id)))) { %>
-
-                <a href="/quizzes/<%= quizId %>/tips/<%= tip.id %>/accept?_method=PUT"><button>Aceptar</button></a>
-
-            <% } %>
-
-            <% if ((session.user && (session.user.isAdmin || (quizAuthorId && quizAuthorId === session.user.id)))) { %>
-
-                <a href="/quizzes/<%= quizId %>/tips/<%= tip.id %>?_method=DELETE"><button>Borrar</button></a>
-
-            <% } %>
-
-        </li>
-    <% } %>
-</ul>-->
 <ul>
-    <% for (var i in tips) { %>
-        <% var tip = tips[i]; %>
+    <% for (var i in Tips) { %>
+        <% var tip = Tips[i]; %>
 
         <% var accepted = tip.accepted; %>
         <% var isAdmin = session.user && session.user.isAdmin; %>
